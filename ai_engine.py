@@ -1,19 +1,24 @@
-import os
+import streamlit as st
 from openai import OpenAI
 import json
+import os
+from dotenv import load_dotenv
 
-#  Initialize client
+load_dotenv()
+
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+#  Use Streamlit Secrets (IMPORTANT FIX)
 
 
-#  Utility: Clean JSON response (handles ```json issues)
+
+#  Utility: Clean JSON response
 def clean_json(content):
     content = content.strip()
     content = content.replace("```json", "").replace("```", "")
     return content
 
 
-#  Step 1: Generate explanation + questions
+# Step 1: Generate explanation + questions
 def generate_learning_content(class_level, subject, topic):
     prompt = f"""
 You are an AI tutor for Indian school students.
